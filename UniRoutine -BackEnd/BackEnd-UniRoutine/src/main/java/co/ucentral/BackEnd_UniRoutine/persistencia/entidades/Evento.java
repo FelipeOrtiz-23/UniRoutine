@@ -1,14 +1,14 @@
 package co.ucentral.BackEnd_UniRoutine.persistencia.entidades;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "evento")
@@ -21,10 +21,17 @@ public class Evento {
     private int id_evento;
     private String titulo;
     private String descripcion;
-    private Date fecha_hora;
+    private Integer prioridad;
+    private LocalDateTime fechaCreacion;
     private String ubicacion;
-    private int id_calendario;
 
+
+    @ManyToOne
+    @JoinColumn(name = "id_usuario")
+    private Usuario usuario;
+
+    @OneToMany(mappedBy = "evento", cascade = CascadeType.ALL)
+    private List<Recordatorio> recordatorios;
 
 
 }

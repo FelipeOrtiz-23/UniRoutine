@@ -1,12 +1,13 @@
 package co.ucentral.BackEnd_UniRoutine.persistencia.entidades;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Entity
 @Table(name = "usuario")
@@ -21,4 +22,13 @@ public class Usuario {
     private String correo;
     private String contrasena;
     private String preferencias;
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Tarea> tareas;
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private List<Recordatorio> recordatorios;
+
+
 }

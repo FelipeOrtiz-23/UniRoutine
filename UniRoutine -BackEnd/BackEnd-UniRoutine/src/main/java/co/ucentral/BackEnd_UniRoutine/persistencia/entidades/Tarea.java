@@ -1,14 +1,15 @@
 package co.ucentral.BackEnd_UniRoutine.persistencia.entidades;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "tarea")
@@ -22,8 +23,17 @@ public class Tarea {
     private String titulo;
     private String descripcion;
     private Date fecha_vencimiento;
-    private String prioridad;
+    private Integer prioridad;
+    private LocalDateTime fechaCreacion;
     private String categoria;
     private String estado;
-    private int id_usuario;
+
+    @ManyToOne
+    @JoinColumn(name = "id_usuario")
+    @JsonBackReference
+    private Usuario usuario;
+
+    @OneToMany(mappedBy = "tarea", cascade = CascadeType.ALL)
+    private List<Recordatorio> recordatorios;
+
 }
