@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - FocusFlow</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header><h1>Registro de Usuario</h1></header>
+    <main>
+        <form id="register-form">
+            <label for="new-username">Nombre de Usuario</label>
+            <input type="text" id="new-username" placeholder="Nombre de usuario" required>
+            
+            <label for="new-password">Contraseña</label>
+            <input type="password" id="new-password" placeholder="Contraseña" required>
+            
+            <label for="confirm-password">Confirmar Contraseña</label>
+            <input type="password" id="confirm-password" placeholder="Confirmar contraseña" required>
+            
+            <button type="submit">Crear Cuenta</button>
+        </form>
+    </main>
+
+    <script>
+        document.getElementById('register-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const username = document.getElementById('new-username').value;
+            const password = document.getElementById('new-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+
+            // Validar que las contraseñas coincidan
+            if (password !== confirmPassword) {
+                alert('Las contraseñas no coinciden');
+                return;
+            }
+
+            // Enviar los datos al servidor con fetch
+            fetch('/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                    alert(data.message); // Muestra el mensaje de éxito
+                    window.location.href = '/login'; // Redirige al login si el registro es exitoso
+                } else {
+                    alert(data.error); // Muestra el error
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>
