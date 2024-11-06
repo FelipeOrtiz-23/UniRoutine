@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Tareas - FocusFlow</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Lista de Tareas</h1>
+        <nav>
+            <a href="index.html">Inicio</a>
+            <a href="events.html">Ver Eventos</a>
+            <a href="tasks.html">Ver Tareas</a>
+        </nav>
+    </header>
+    <main>
+        <section class="task-list-section">
+            <h2>Tareas</h2>
+            <ul id="task-list"></ul>
+        </section>
+    </main>
+    <footer>
+        <p>© 2024 FocusFlow. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        // Función para cargar tareas desde el servidor
+        async function loadTasks() {
+            try {
+                const response = await fetch('/api/tasks'); // Asegúrate de que esta URL es correcta
+                if (response.ok) {
+                    const tasks = await response.json();
+                    const taskList = document.getElementById('task-list');
+                    taskList.innerHTML = ''; // Limpiar lista antes de agregar tareas
+
+                    if (tasks.length === 0) {
+                        taskList.innerHTML = '<li>No hay tareas disponibles.</li>';
+                    } else {
+                        tasks.forEach(task => {
+                            const li = document.createElement('li');
+                            li.innerHTML = `
+                                <strong>${task.task_name}</strong> - ${task.task_status} - ${task.task_date}
+                                <br>Prioridad: ${task.task_priority}
+                            `;
+                            taskList.appendChild(li);
+                        });
+                    }
+                } else {
+                    console.error('No se pudo cargar las tareas');
+                }
+            } catch (error) {
+                console.error('Error al cargar las tareas:', error);
+            }
+        }
+
+        // Cargar las tareas cuando la página se carga
+        document.addEventListener('DOMContentLoaded', loadTasks);
+    </script>
+</body>
+</html>
+ 

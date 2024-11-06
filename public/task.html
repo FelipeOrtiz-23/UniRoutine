@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Tarea o Evento - FocusFlow</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header><h1>Crear Tarea o Evento</h1></header>
+    <main>
+        <form id="task-form">
+            <label for="task-name">Nombre de Actividad</label>
+            <input type="text" id="task-name" placeholder="Introduce el nombre de la tarea o evento" required>
+
+            <label for="task-category">Categoría</label>
+            <select id="task-category">
+                <option value="Tarea">Tarea</option>
+                <option value="Evento">Evento</option>
+            </select>
+
+            <label for="task-priority">Prioridad</label>
+            <select id="task-priority">
+                <option value="Alta">Alta</option>
+                <option value="Media">Media</option>
+                <option value="Baja">Baja</option>
+            </select>
+
+            <label for="task-status">Estado</label>
+            <select id="task-status">
+                <option value="Pendiente">Pendiente</option>
+                <option value="En Proceso">En Proceso</option>
+                <option value="Completada">Completada</option>
+            </select>
+
+            <label for="task-date">Fecha</label>
+            <input type="date" id="task-date" required>
+
+            <label for="task-duration">Duración (en horas)</label>
+            <input type="number" id="task-duration" placeholder="Introduce la duración" required>
+
+            <label for="task-notes">Notas (Opcional)</label>
+            <textarea id="task-notes" placeholder="Añadir notas adicionales"></textarea>
+
+            <button type="submit" id="save-task-btn">Guardar</button>
+        </form>
+    </main>
+
+    <script>
+        document.getElementById('task-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const taskName = document.getElementById('task-name').value;
+            const taskCategory = document.getElementById('task-category').value;
+            const taskPriority = document.getElementById('task-priority').value;
+            const taskStatus = document.getElementById('task-status').value;
+            const taskDate = document.getElementById('task-date').value;
+            const taskDuration = document.getElementById('task-duration').value;
+            const taskNotes = document.getElementById('task-notes').value;
+
+            // Validar que todos los campos obligatorios estén llenos
+            if (!taskName || !taskDate || !taskDuration) {
+                alert('Por favor, complete todos los campos obligatorios.');
+                return;
+            }
+
+            // Crear un objeto con los datos de la tarea o evento
+            const taskData = {
+                task_name: taskName,
+                task_category: taskCategory,
+                task_priority: taskPriority,
+                task_status: taskStatus,
+                task_date: taskDate,
+                task_duration: taskDuration,
+                task_notes: taskNotes
+            };
+
+            // Enviar los datos al servidor usando fetch
+            fetch('/tasks', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(taskData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.taskId) {
+                    alert('Tarea o evento creado con éxito');
+                    // Redirigir o hacer algo más después de la creación exitosa
+                    window.location.href = '/tasks'; // Redirige a la lista de tareas (puedes cambiar la URL)
+                } else {
+                    alert('Hubo un problema al crear la tarea o evento');
+                }
+            })
+            .catch(error => console.error('Error al crear la tarea o evento:', error));
+        });
+    </script>
+</body>
+</html>
