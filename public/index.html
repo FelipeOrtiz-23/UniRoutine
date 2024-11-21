@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FocusFlow - Gestión de Rutinas</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FocusV1 - Página Principal</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Bienvenido a Focus</h1>
+        <div class="button-container">
+            <a href="/login" class="button">Login</a>
+            <a href="/register" class="button">Register</a>
+            <a href="/task" class="button">Crear Tarea</a>
+            <a href="/tasks" class="button">Ver Tareas</a>
+            <a href="/events" class="button">Ver Eventos</a>
+        </div>
+    </div>
+</body>
+</html>
+
+
+<body>
+    <header>
+        <h1>FocusFlow - Gestión de Rutinas</h1>
+    </header>
+
+    <main>
+        <!-- Sección para añadir tareas -->
+        <section class="task-section">
+            <h2>Añadir Una Tarea o Evento</h2>
+            <p>Cada pequeño paso te acerca a la meta, no subestimes tu progreso</p>
+
+            <form id="task-form">
+                <label for="task-name">Nombre de Actividad</label>
+                <input type="text" id="task-name" placeholder="Introduce el nombre de la tarea o evento" required>
+
+                <label for="task-category">Categoría</label>
+                <select id="task-category">
+                    <option value="Tarea">Tarea</option>
+                    <option value="Evento">Evento</option>
+                </select>
+
+                <label for="task-priority">Prioridad</label>
+                <select id="task-priority">
+                    <option value="Alta">Alta</option>
+                    <option value="Media">Media</option>
+                    <option value="Baja">Baja</option>
+                </select>
+
+                <label for="task-status">Estado</label>
+                <select id="task-status">
+                    <option value="Pendiente">Pendiente</option>
+                    <option value="En Proceso">En Proceso</option>
+                    <option value="Completada">Completada</option>
+                </select>
+
+                <label for="task-date">Fecha</label>
+                <input type="date" id="task-date" required>
+
+                <label for="task-duration">Duración (en horas)</label>
+                <input type="number" id="task-duration" placeholder="Introduce la duración" required>
+
+                <label for="task-notes">Notas (Opcional)</label>
+                <textarea id="task-notes" placeholder="Añadir notas adicionales"></textarea>
+
+                <button type="submit" id="save-task-btn">Guardar</button>
+            </form>
+        </section>
+
+        <!-- Listas de Tareas -->
+        <section class="task-list-section">
+            <h2>Lista de Tareas y Eventos</h2>
+            <ul id="task-list"></ul>
+        </section>
+
+        <!-- Resumen del Progreso -->
+        <section class="progress-section">
+            <h2>Progreso</h2>
+            <canvas id="progress-chart"></canvas>
+            <canvas id="priority-chart"></canvas>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>© 2024 FocusFlow. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
+
+
+
